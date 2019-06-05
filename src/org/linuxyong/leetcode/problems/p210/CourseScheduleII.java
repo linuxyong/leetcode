@@ -1,49 +1,44 @@
 package org.linuxyong.leetcode.problems.p210;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
+import java.util.Queue;
 
 public class CourseScheduleII {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        List<Set<Integer>> preList = new ArrayList<>(numCourses);
+        List<List<Integer>> edges = new ArrayList<>(numCourses);
         for (int i = 0; i < numCourses; ++i) {
-            preList.add(new HashSet<>());
+            edges.add(new ArrayList<>());
         }
+
+        int[] indegree = new int[numCourses];
         for (int i = 0; i < prerequisites.length; ++i) {
             int preCourse = prerequisites[i][1];
             int subCourse = prerequisites[i][0];
-            preList.get(subCourse).add(preCourse);
+            edges.get(preCourse).add(subCourse);
+            indegree[subCourse]++;
         }
 
         List<Integer> result = new ArrayList<>();
-        Set<Integer> checkSet = new HashSet<>();
+
+        Queue<Integer> zeroDegreeQueue = new LinkedList<>();
         for (int i = 0; i < numCourses; ++i) {
-            checkSet.add(i);
+            if (indegree[i ] == 0) {
+                zeroDegreeQueue.add(i);
+            }
         }
-        Set<Integer> toRemove = new HashSet<>();
-        do {
-            toRemove.clear();
-            Iterator<Integer> iterator = checkSet.iterator();
-            while (iterator.hasNext()) {
-                int course = iterator.next();
-                Set<Integer> preCourses = preList.get(course);
-                if (preCourses == null || preCourses.isEmpty()) {
-                    result.add(course);
-                    iterator.remove();
-                    toRemove.add(course);
+
+        while (!zeroDegreeQueue.isEmpty()) {
+            int node = zeroDegreeQueue.remove();
+            result.add(node);
+            List<Integer> adjacents = edges.get(node);
+            for (int adjacent: adjacents) {
+                if(--indegree[adjacent] == 0) {
+                    zeroDegreeQueue.add(adjacent);
                 }
             }
-
-            iterator = checkSet.iterator();
-            while (iterator.hasNext()) {
-                int course = iterator.next();
-                Set<Integer> preCourses = preList.get(course);
-                preCourses.removeAll(toRemove);
-            }
-        }while (toRemove.size() > 0);
+        }
 
         if (result.size() != numCourses) {
             return new int[]{};
