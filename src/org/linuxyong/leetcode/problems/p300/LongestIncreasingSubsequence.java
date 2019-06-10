@@ -16,7 +16,7 @@ public class LongestIncreasingSubsequence {
         for (int i = 1; i < length; ++i) {
             cMax[i] = 1;
             for (int j = 0; j < i; ++j) {
-                if (nums[i] >= nums[j] && cMax[i] < cMax[i] + 1) {
+                if (nums[i] > nums[j] && cMax[i] < cMax[j] + 1) {
                     cMax[i] = cMax[j] + 1;
                 }
             }
