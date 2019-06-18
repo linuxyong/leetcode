@@ -30,6 +30,18 @@ public class LongestValidParenthesesTest {
 
         res = instance.longestValidParentheses(")()(())");
         assertEquals(res, 6);
+
+        res = instance.longestValidParentheses("(()");
+        assertEquals(res, 2);
+
+        res = instance.longestValidParentheses("(()(()");
+        assertEquals(res, 2);
+
+        res = instance.longestValidParentheses("(()(()()");
+        assertEquals(res, 4);
+
+        res = instance.longestValidParentheses("(()())");
+        assertEquals(res, 6);
     }
 
 }
