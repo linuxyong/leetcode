@@ -1,4 +1,4 @@
-package org.linuxyong.utils;
+package org.linuxyong.utils.search;
 
 /**
  * Created by yongly on 2019/6/19.

@@ -1,6 +1,7 @@
-package org.linuxyong.utils;
+package org.linuxyong.utils.search;
 
 import org.junit.Test;
+import org.linuxyong.utils.search.BinarySearch;
 
 import static org.junit.Assert.*;
 
